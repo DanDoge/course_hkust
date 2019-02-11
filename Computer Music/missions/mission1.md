@@ -1,7 +1,0 @@
-### ideas
-
-story
-
-music
-
-video
