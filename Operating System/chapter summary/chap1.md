@@ -1,4 +1,6 @@
-#### chapter one
+### chapter one
+
+#### TA's note
 
 main purposes of os
 - user convenience: for users / programmers to execute programs in a convenient, safe, protected and efficient mannner
@@ -32,3 +34,9 @@ virtulization, cloud computing
 - virtulization: os as an app. within another os, abstracting hardware onto diff. exec. environments
 - virtual machine: creates an illuison that each process thinks it runs on a dedicate cpu and mem.
 - cloud computing: computing / storage / app services on-demand over network; often uses virtulization; public, private or hybrid; offer apps, platforms, or sys. infra.
+
+#### highlight from textbook
+
+OS is software that manages a computer's hardware. OS controls the hardware and coordinates its use among the various application programs for the various users. OS as a resource allocator, as a control program, manages the execution of user programs to prevent errors and improper use of the computer. the common functions of controlling and allocating resources are brought together into the OS. OS is the one program running all the time on the computer. OS includes the always-running kernel, middleware frameworks that ease app. dev. and provide features, and sys. programs that aid in managing the system while it's running.
+
+A device controller maintains some local buffer storage and a set of special-purpose register. OS have a device driver for each device controller. Hardware may trigger an interrupt at any time by sending a signal to CPU by sys. bus. interrupt must transfer control to the appropriate interrupt service routine. A table of pointers to interrupt routines can be used to provide the necessary speed. The device controller raises an interrupt by asserting a signal on the interrupt request line, CPU catches the interrupt and dispatched it to the interrupt handler, and the handler clears the interrupt by serving the device. CPU have two interrupt lines: nonmaskable interrupt reserved for events like unrecoverable memory errors, an =d maskable interrupt line which can be turned off by CPU before critical instructions that cannot be interrupted
