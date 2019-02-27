@@ -1,0 +1,224 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[top=2cm, bottom=4.5cm, left=2.5cm, right=2.5cm]{geometry}
+\usepackage{amsmath,amsthm,amsfonts,amssymb,amscd}
+\usepackage{enumerate}
+\usepackage{fancyhdr}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+\hypersetup{%
+  colorlinks=true,
+  linkcolor=blue,
+  linkbordercolor={0 0 1}
+}
+
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.05in}
+
+% Edit these as appropriate
+\newcommand\course{ELEC 2600}
+\newcommand\hwnumber{1}                  % <-- homework number
+\newcommand\NetIDa{Huang Daoji}           % <-- NetID of person #1
+\newcommand\NetIDb{20623420}
+
+\pagestyle{fancyplain}
+\headheight 35pt
+\lhead{\NetIDa \\ \NetIDb}
+\chead{\textbf{\Large Homework \hwnumber}}
+\rhead{\course \\ \today}
+\lfoot{}
+\cfoot{}
+\rfoot{\small\thepage}
+\headsep 1.5em
+
+\begin{document}
+
+\section*{Problem 1}
+    \textbf{a}: Notations: D stands for \textit{defective}, and N for \textit{non-defective}. Then the sample space
+        \begin{equation}
+            S = \{<D, D>, <D, N>, <N, D>, <N, N>\},
+        \end{equation}
+        where $\{<D, N>\}$ means the first transistor picked up is defective while the second non-defective.
+    \\ \\
+    \textbf{b}: Define event B to be \textit{the first transistor picked up is defective}, s.t.
+        \begin{equation}
+            B = \{<D, N>, <D, D>\},
+        \end{equation}
+    which is not a null, certain event, and is not an elementary event.
+    \\ \\
+    \textbf{c}: The probability of event B is the number of outcomes in B devided by the total number of outcomes, which is
+        \begin{equation}
+            P(B) = \frac{5 \times 99}{100 \times 99} = 0.05,
+        \end{equation}
+    where $5 \times 99$ means the first one is defective(5 defective transistors in the box), and the second transistor could be a random one; while $100 \times 99$ is the number of outcomes we pick up two transistors from $100$ ones.
+
+    \hfill\ensuremath{\square}
+
+\section*{Problem 2}
+
+    From the description in the problem, we know the five cards are ordered. The total number of outcomes $S$ is
+        \begin{equation}
+            \|S\| = 52 \times 51 \times 50 \times 49 \times 48 = 311875200
+        \end{equation}
+
+    \textbf{a}: Define events $A_i, i \in \{1, 2, 3, 4, 5\}$, which means the i-th card is a heart, while all of the other four are non-heart. Then we have
+        \begin{equation}
+            A = A_1 \cup A_2 \cup A_3 \cup A_4 \cup A_5,
+        \end{equation}
+    and for each $A_i$,
+        \begin{equation}
+            \|A_i\| = 13 \times 39 \times 38 \times 37 \times 36 = 25662312,
+        \end{equation}
+    that is for that we can view each $A_i$ as an event where we pick up four non-heart cards(ordered!) and one heart card, given the fact that the "position" of the heart card is fixed by subscript i. So we have
+        \begin{equation}
+            \|A\| = 5 \times (13 \times 39 \times 38 \times 37 \times 36) = 128311560,
+        \end{equation}
+    and the probability of event A is
+        \begin{equation}
+            P(A) = \frac{\|A\|}{\|S\|} = 0.4114
+        \end{equation}
+    \\ \\
+    \textbf{b}: Instead of computing the sizes and probability of event B directly, consider the complement of event B, denoted by B$^c$, which is {none of the 5 cards picked is a heart}. Its size is the same with the size of outcomes where we pick 5 cards from 39(= 3 $\times$ 13) cards, which is
+        \begin{equation}
+            \|B^c\| = 39 \times 38 \times 37 \times 36 \times 35 = 69090840.
+        \end{equation}
+    We then have
+        \begin{equation}
+            \|B\| = \|S\| - \|B^c\| = 242784360
+        \end{equation}
+    and the probability of event B is
+        \begin{equation}
+            P(B) = \frac{\|B\|}{\|S\|} = 0.7785
+        \end{equation}
+    \\ \\
+    \textbf{c}: We first pick up one heart card, then pick 4 cards from the remaining 51 cards, so the size of event C is
+        \begin{equation}
+            \|C\| = 13 \times 51 \times 50 \times 49 \times 48 = 77968800
+        \end{equation}
+    and the probability of event B is
+        \begin{equation}
+            P(C) = \frac{\|C\|}{\|S\|} = 0.25,
+        \end{equation}
+    which is consistent to the intuition that we have $\frac{1}{4}$ of all the cards being heart at first.
+    \\ \\
+    \textbf{d}: From the equivalence between the first and the second card, the size and probability of event D are the same with event C.\\
+    Or we can simulate the experiment step by step, and we should pay special attention to whether the first card is a heart. So the size of event D is
+        \begin{equation}
+            \|D\| = 13 \times 12 \times 50 \times 49 \times 48 + 39 \times 13 \times 50 \times 49 \times 48 = 77968800,
+        \end{equation}
+    where the first term calculates cases where the first card picked is a heart, while the second calculates other cases. And the probability of event D is
+        \begin{equation}
+            P(D) = \frac{\|D\|}{\|S\|} = 0.25,
+        \end{equation}
+    \\ \\
+    \textbf{e} Event E specifies the first two cards while the last three can be random cards, so by definition, the size of event E is
+        \begin{equation}
+            \|E\| = 13 \times 12 \times 50 \times 49 \times 48 = 18345600,
+        \end{equation}
+    and the probability of event E is
+       \begin{equation}
+           P(E) = \frac{\|E\|}{\|S\|} = 0.0588,
+       \end{equation}
+    \\ \\
+    \textbf{f}: Event F can be considered to be the union of event C and D, and we observe the fact that event E is the intersection of event C and D, so we have:
+        \begin{equation}
+            \|F\| = \|C \cup D\| = \|C\| + \|D\| - \|C \cap D\| = \|C\| + \|D\| - \|E\| = 137592000
+        \end{equation}
+    and the probability of event F is
+       \begin{equation}
+           P(F) = \frac{\|F\|}{\|S\|} = 0.4412,
+       \end{equation}
+
+    \hfill\ensuremath{\square}
+
+\section*{Problem 3}
+
+    \textbf{a}: Notations: we use event $I, II, III$ to represent the event the dice picked up is of the respective type. So we have
+        \begin{equation}
+            \begin{aligned}
+                P(one) &= P(one | I) \times P(I) + P(one | II) \times P(II) + P(one | III) \times P(III) \\
+                &= \frac{1}{6} \times \frac{5}{12} + \frac{1}{3} \times \frac{3}{12} + 1 \times \frac{4}{12} \\
+                &= \frac{5 + 6 + 24}{72} \\
+                &= \frac{35}{72}
+            \end{aligned}
+        \end{equation}
+    \\ \\
+    \textbf{b}: From Bayesian's law, we derive
+        \begin{equation}
+            \begin{aligned}
+                P(I | one) &= \frac{P(one | I) \times P(I)}{P(one)} \\
+                &= \frac{\frac{1}{6} \times \frac{5}{12}}{\frac{35}{72}} \\
+                &= \frac{5}{35} = \frac{1}{7}
+            \end{aligned}
+        \end{equation}
+
+    \hfill\ensuremath{\square}
+
+\section*{Problem 4}
+
+    Notations: we use event $s_i, r_j$ to represent Machine A sends a $i$ and Machine B receive a $j$ respectively.
+    \\ \\
+    \textbf{a}: From the law of total probability, we have
+        \begin{equation}
+            \begin{aligned}
+                P(r_1) &= P(r_1 | s_1) \times P(s_1) + P(r_1 | s_0) \times P(s_0) \\
+                &= 0.85 \times 0.6 + 0.15 \times 0.4 \\
+                &= 0.57
+            \end{aligned}
+        \end{equation}
+    \\ \\
+    \textbf{b}: From Bayesian's law, we derive
+        \begin{equation}
+            \begin{aligned}
+                P(s_1 | r_1) &= \frac{P(r_1 | s_1) \times P(s_1)}{P(r_1)} \\
+                &= \frac{0.85 \times 0.6}{0.57} \\
+                &= 0.8947
+            \end{aligned}
+        \end{equation}
+    \\ \\
+    \textbf{c}: No matter what digit is transmitted, the error probability is $0.15$. So we only need to select two out of the four transmissions to be received correctly, and the other two received wrong answers. Thus we have
+        \begin{equation}
+            \begin{aligned}
+                P(two\ errors) &= (P(correct))^2 \times (P(wrong1))^2 \times C_{2}^{4} \\
+                &= 0.85^2 \times 0.15^2 \times 6 \\
+                &= 0.0975
+            \end{aligned}
+        \end{equation}
+    \\ \\
+    \textbf{d}: \textit{Based on my understanding of this question, it means in the first two transmissions, Machine A sends an "1" but Machine B received a "0", or Machine A sends a "0"} \\
+    The probability of event $A$: a "1" transmitted and received correctly is
+        \begin{equation}
+            \begin{aligned}
+                P(A) &= P(s_1) \times P(r_1 | s_1) \\
+                &= 0.6 \times 0.85 \\
+                &= 0.51
+            \end{aligned}
+        \end{equation}
+    So the probability of event $A$'s first occurance is the third time is:
+        \begin{equation}
+            \begin{aligned}
+                P(third\ time) &= (1 - P(A))^{2} \times P(A) \\
+                &= 0.1225
+            \end{aligned}
+        \end{equation}
+
+\section*{Problem 5}
+    We use subscript 1, 2 and 3 to denote the first, second and third game. So the probability is
+        \begin{equation}
+            \begin{aligned}
+                P(V_1 \cap L_2 \cap L_3) &= P(V_1) \times P(L_2 | V_1) \times P(L_3 | V_1, L_2) \\
+                &= P(V_1) \times P(L_2 | V_1) \times P(L_3 | L_2),
+            \end{aligned}
+        \end{equation}
+    for the color only depends on the previous game. Take the three rules into account, we have
+        \begin{equation}
+            \begin{aligned}
+                P(V_1 \cap L_2 \cap L_3) &= P(V_1) \times P(L_2 | V_1) \times P(L_3 | L_2) \\
+                &= P(V | W) \times P(L | B) \times P(L | W) \\
+                &= 0.8 \times 0.6 \times 0.2 \\
+                &= 0.096
+            \end{aligned}
+        \end{equation}
+
+\end{document}
