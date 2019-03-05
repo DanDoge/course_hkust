@@ -97,3 +97,55 @@ OS implementation
     - code written faster, more compact, easy to understand debug
     - modern compiler improves the generated code
     - OS far easier to port, to other hardware platform
+
+### highlight from textbook
+
+several view of the OS
+- on the services it provides
+- on the interface it makes availble to users and programs
+- on its components and their interconnections
+
+program execution: system should load a program into memory and run that, the program must be able to end its execution, either normally or abnormally
+
+communications may be implemented via shared memory, or message passing
+
+protection and security: extends to defending external IO devices, including network adapters
+
+command interpreters
+- as a special program running when a process is initiated or when a user first logs on
+- contains the code to execute the command, or merely uses the command to identify a file to be loaded into memory and executed
+- shell scripts
+
+system calls
+- as functions written in C and C++
+- possible error conditions for ach system call must be handled
+- API
+    - a set of functions that are available to an application programmer
+    - access an API via a library of code provided by the OS -> libc in C
+    - API invoke the system call on behalf of the application programmer
+    - benefits: program portability and hide the difficulty of system call
+    - RTE, the full suite of software needed to execute apps written in a given language, including compliers or interpreters as well as other software(libraries and loaders)
+    - RTE provides the system call interface as the link to system call
+- a number is associated with each system call, and the system call interface maintains a table indexed according to these numbers
+- most details of the OS interface are hidden by the API and menaged by the RTE
+- methods to pass the parameters to the OS
+    - registers
+    - stored in a block / table, pass the address of the block in a register
+    - pushed onto a stack by the program, popped off by the OS
+
+OS transfer control to the invoking command interpreter, under either normal or abnormal circumstances. define a normal termination as an error at level 0, to automatically determine the next action. save the memory image of the existing program if control to be returned to the existing program. provide system call to lock shared data
+
+a callable system program can be considered an API by other system programs
+
+an OS which allows unmanaged access to devices may cause contention and deadlock for device
+
+strace: lists each system call as a program is executed
+
+single step: a trap is executed by the CPU after every instruction
+
+communication
+- a connection must be opened before communication take place
+- special purpose deamons are awakened when a connection is made
+- shared memory requires the two / more process agree to remove the restriction that one process accessing the others memory, the process are responsible for not writing to the same location simultaneously
+- message passing is useful for small amount of data: no conflicts need to avoid, easier to implement
+- shared memory allows maximum speed and convenience of communication, but lack of protection and synchronization
