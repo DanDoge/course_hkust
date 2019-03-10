@@ -19,13 +19,14 @@
  *     28/02: all tasks finished, tested
  *     28/02: comments added
  *     06/03: secure version of system call implemented
+ *     09/03: revised syscall implementation, tested
  * To do list:
  *     [x] read the helper functions
  *     [x] finish all tasks
  *     [x] run tests
  *     [x] comments and documentation
  *     [x] check the return value(if any) of all system calls
- *     [ ] test again
+ *     [x] test again
  *     [ ] format and beauty
  */
 
@@ -47,7 +48,7 @@
 #define MAIN_BUF_LEN 1024
 
 /* uncomment the next line when testing */
-// #define DEBUG
+#define DEBUG
 
 /* Start of declaration of secure version of system calls
  * Implementations are at the end
@@ -56,7 +57,7 @@
 void Close(int fd);
 pid_t Getpid(void);
 ssize_t Write(int fd, const void* buf, size_t count);
-int Open(const char* pathname, int flags, mode_t mode);
+int Open(const char* pathname, int flags);
 int Pipe(int pipefd[2]);
 pid_t Fork(void);
 pid_t Waitpid(pid_t pid, int* iptr, int options);
@@ -182,6 +183,10 @@ int main(int argc, char **argv)
     int in_file = Open(infile, O_RDONLY);
     int out_file = Open(outfile, O_WRONLY | O_APPEND);
     // ---------- END TASK 1 ----------
+
+#ifdef DEBUG
+    printf("infile fd: %d, outfile fd: %d\n", in_file, out_file);
+#endif
 
     // TASK 2 Get parent pid and print to outfile (5 pts)
     pid_t parent_pid = Getpid();
@@ -334,7 +339,7 @@ int main(int argc, char **argv)
 /* Definition of the secure version of system calls */
 
 void Close(int fd){
-    if(close(int fd) < 0){
+    if(close(fd) < 0){
         printf("Error in closing file, fd: %d\n", fd);
         exit(-1);
     }
@@ -347,16 +352,16 @@ pid_t Getpid(void){
 
 ssize_t Write(int fd, const void* buf, size_t count){
     ssize_t tmp;
-    if(tmp = write(fd, buf, count) < 0){
+    if((tmp = write(fd, buf, count)) < 0){
         printf("Error in write %s to file %d\n", buf, fd);
         exit(-1);
     }
     return tmp;
 }
 
-int Open(const char* pathname, int flags, mode_t mode){
+int Open(const char* pathname, int flags){
     int tmp;
-    if(tmp = open(pathname, flags, mode) < 0){
+    if((tmp = open(pathname, flags)) < 0){
         printf("Error in open file %s\n", pathname);
         exit(-1);
     }
@@ -365,7 +370,7 @@ int Open(const char* pathname, int flags, mode_t mode){
 
 int Pipe(int pipefd[2]){
     int tmp;
-    if(tmp = pipe(pipefd) < 0){
+    if((tmp = pipe(pipefd)) < 0){
         printf("Error in create pipe\n");
         exit(-1);
     }
@@ -374,7 +379,7 @@ int Pipe(int pipefd[2]){
 
 pid_t Fork(void){
     pid_t pid;
-    if(pid = fork() < 0){
+    if((pid = fork()) < 0){
         printf("Error in fork()\n");
         exit(-1);
     }
@@ -383,7 +388,7 @@ pid_t Fork(void){
 
 pid_t Waitpid(pid_t pid, int* iptr, int options){
     pid_t child_pid;
-    if(child_pid = waitpid(pid, iptr, options) < 0){
+    if((child_pid = waitpid(pid, iptr, options)) < 0){
         printf("Error in waiting for child %d\n", pid);
         exit(-1);
     }

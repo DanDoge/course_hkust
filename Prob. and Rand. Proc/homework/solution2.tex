@@ -1,0 +1,132 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[top=2cm, bottom=4.5cm, left=2.5cm, right=2.5cm]{geometry}
+\usepackage{amsmath,amsthm,amsfonts,amssymb,amscd}
+\usepackage{enumerate}
+\usepackage{fancyhdr}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+\hypersetup{%
+  colorlinks=true,
+  linkcolor=blue,
+  linkbordercolor={0 0 1}
+}
+
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.05in}
+
+% Edit these as appropriate
+\newcommand\course{ELEC 2600}
+\newcommand\hwnumber{2}                  % <-- homework number
+\newcommand\NetIDa{Huang Daoji}           % <-- NetID of person #1
+\newcommand\NetIDb{20623420}
+
+\pagestyle{fancyplain}
+\headheight 35pt
+\lhead{\NetIDa \\ \NetIDb}
+\chead{\textbf{\Large Homework \hwnumber}}
+\rhead{\course \\ \today}
+\lfoot{}
+\cfoot{}
+\rfoot{\small\thepage}
+\headsep 1.5em
+
+\begin{document}
+
+\section*{Problem 1}
+    \textbf{a}: From the pmf given, we have
+        \begin{equation*}
+            \begin{aligned}
+                0.2 + 0.4 + a + 0.1 + 0.1 &= 1 \\
+                a &= 0.2
+            \end{aligned}
+        \end{equation*}
+    \textbf{b}: The expectation of $X$ is
+        \begin{equation*}
+            \begin{aligned}
+                E[X] &= \sum xp(x) \\
+                &= -2 * 0.2 + (-1) * 0.4 + 0 * a + 1 * 0.1 + 2 * 0.1 \\
+                &= -0.5
+            \end{aligned}
+        \end{equation*}
+        , while the varience of $X$ is
+        \begin{equation*}
+            \begin{aligned}
+                Var[X] &= E[X^{2}] - (E[X])^{2} \\
+                &= 4 * (0.2 + 0.1) + 1 * (0.4 + 0.1) + a * 0 - (0.4)^{2} \\
+                &= 1.45
+            \end{aligned}
+        \end{equation*}
+    \textbf{c}: The sample space of $X$ given $A$ is $\{-2, -1\}$(omit the event "otherwise" with probability 0), and the probability of these events are
+    \begin{equation*}
+        \begin{aligned}
+            p_{X | A}(X = -2) &= \frac{0.2}{0.2 + 0.4} &= \frac{1}{3} \\
+            p_{X | A}(X = -1) &= \frac{0.4}{0.2 + 0.4} &= \frac{2}{3}
+        \end{aligned}
+    \end{equation*}
+    \textbf{d}
+    \begin{equation*}
+        \begin{aligned}
+            E[X | A] &= \sum xp_{X | A}(x) \\
+            &= (-2) * \frac{1}{3} + (-1) * \frac{2}{3} \\
+            &= -\frac{4}{3}
+        \end{aligned}
+    \end{equation*}
+    \begin{equation*}
+        \begin{aligned}
+            Var[X | A] &= E[X^{2}] - (E[X])^{2} \\
+            &= \sum x^{2}p_{X | A}(x) - (E[X])^{2} \\
+            &= 4 * \frac{1}{3} + 1 * \frac{2}{3} - (-\frac{4}{3})^{2}
+            &= \frac{2}{9}
+        \end{aligned}
+    \end{equation*}
+    \textbf{e} The sample space of $Y$ is $\{-1, 1, 3, 5, 9\}$(omit the event "otherwise" with probability being 0), and the probability of these events are $0.2, 0.4, 0.2, 0.1, 0.1$ respectively.
+
+\section*{Problem 2}
+    \textbf{a}: The pmfs of Transmitter 1 and 2 are
+        \begin{equation*}
+            \begin{aligned}
+                P_{1}(x) &= \frac{1}{3} * (\frac{2}{3})^{x - 1} \\
+                P_{2}(x) &= \frac{1}{2} * (\frac{1}{2})^{x - 1},
+            \end{aligned}
+        \end{equation*}
+    where $x \in N^{+}$. \\
+    From the problem, we have $P(x) = 0.7 * P_{1}(x) + 0.3 * P_{2}(x)$, thus the pmf of $X$ is
+        \begin{equation*}
+            \begin{aligned}
+                P(X) = 0.7 * \frac{1}{3} * (\frac{2}{3})^{x - 1} + 0.3 * \frac{1}{2} * (\frac{1}{2})^{x - 1}, \quad X \in N^{+}
+            \end{aligned}
+        \end{equation*}
+    \textbf{b}:
+        \begin{equation*}
+            \begin{aligned}
+                E[X] &= \sum_{1}^{+\infty} xP(x) \\
+                &= \sum_{1}^{+\infty} x(0.7 * P_{1}(x) + 0.3 * P_{2}(x)) \\
+                &= 0.7 * \sum_{1}^{+\infty} xP_{1}(x) + 0.3 * \sum_{1}^{+\infty} xP_{2}(x) \\
+                &= 0.7 * 3 + 0.3 * 2 \\
+                &= 2.7
+            \end{aligned}
+        \end{equation*}
+    \textbf{c}: \textit{Theorem 1}: The expectation of $X^{2}$ is $\frac{2 - p}{p^{2}}$, where $X$ is a geometric random variable ranging from 1 to infinity with mean $\frac{1}{p}$. \\
+    \textit{Proof}:
+        \begin{equation*}
+            \begin{aligned}
+                E[X^{2}] &= Var[X] + (E[X])^{2} \\
+                &= \frac{1 - p}{p^{2}} + (\frac{1}{p})^{2} \\
+                &= \frac{2 - p}{p^{2}}
+            \end{aligned}
+        \end{equation*}
+    So, the varience of $X$ is
+        \begin{equation*}
+            \begin{aligned}
+                Var[X] &= E[X^{2}] - (E[X])^{2} \\
+                &= \sum_{1}^{+\infty} x^{2}P(x) - (E[X])^{2} \\
+                &= \sum_{1}^{+\infty} x^{2}(0.7 * P_{1}(x) + 0.3 * P_{2}(x)) - (E[X])^{2} \\
+                &= 0.7 * \sum_{1}^{+\infty} x^{2}P_{1}(x) + 0.3 \sum_{1}^{+\infty} x^{2}P_{2}(x) - (E[X])^{2} \\
+                &= 0.7 * 15 + 0.3 * 6 - 2.7^{2} \\
+                &= \mbox{calculate later}
+            \end{aligned}
+        \end{equation*}
+
+\end{document}

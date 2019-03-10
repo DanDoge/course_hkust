@@ -149,3 +149,61 @@ communication
 - shared memory requires the two / more process agree to remove the restriction that one process accessing the others memory, the process are responsible for not writing to the same location simultaneously
 - message passing is useful for small amount of data: no conflicts need to avoid, easier to implement
 - shared memory allows maximum speed and convenience of communication, but lack of protection and synchronization
+
+system services
+- hardware -> OS -> system services -> application program
+- some system services are simply UI to system calls, while others are more complex
+- background services
+    - launching at boot time
+    - some terminate after completing their tasks, while others continue until systme halted
+    - services / subsystems / daemons
+    - maybe important activities in a OS which has a small kernel
+- application and system programs shape the users' view of the OS
+
+linker and loaders
+- program must be brought into memory and placed in the contedxt ofa process to be eligible to run
+- relocatable file: designed to be load into any physical memory location
+- relocation: asssigns final address to the program parts and adjusts code and data in the program to match those address
+- libs are conditionally linked, for some part of it may not be used into an executable file
+- dynamically linked libraries are shared
+
+```shell
+file main.o # ELF relocatable file
+
+file main # ELF executable, has the program's evtry point
+```
+
+OS-specific apps
+- each OS provides a unique set of system calls
+- app may be able to run on multiple OS
+    - written in an interpreted language, which has an interpreter availble for multiple OS; performance suffers, limited feature sets
+    - written in a language includes a virtual machine
+    - use a standard language or API, the compiler generates binaries in a machine and OS specific language
+- lack of app mobility
+    - libs provided by diff. OS contain diff. APIs
+    - each OS has a binary format for apps
+    - CPU have varying instruction sets
+    - system call varies
+- ELF file format is not tied to any specific computer architecture, not guarantee a file will run across diff. hardware architecture
+- application binary interface
+    - define how diff. components of binary code can interface for a given OS on a given architecture
+    - including addredd width, methods of passing parameters to system calls, organization of run-time stack, binary form of the system libraries, size of data types
+    - specified for a given architecture
+
+OS design and implementation
+- no complete solutions to such problems
+- define goals and specifications
+    - user goals and system goals
+- separation of policy and mechanism
+    - mechanism flexible enough to work across a range of policies
+    - a change in policy require redifinition of only certain parameters
+    - microkernel: implementing a basic set of primitive building blocks(policy free), take the separation to one exterme
+    - important for all resource allocation
+- implementation
+    - use of higher-level language: code written faster, more compact, easier to understant and debug
+    - simple recompile if improvement in complier technology
+    - easier to port to diff. hardware
+    - but reduce speed and increased storage requirements
+- major performance improvement from: better data structure and algorithms and a small amount of code is critical
+
+##### 2.8
