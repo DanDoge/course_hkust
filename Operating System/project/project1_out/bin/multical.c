@@ -1,8 +1,8 @@
 /*Huang Daoji, Student ID: 20623420
  * My solution basically follows the instruction given in the comments.
- * I refer to man page of some system calls.
+ * I referred to man page of some system calls.
  *
- * The comments more than one line are in this form:
+ * My comments to TASK* are in this form:
  *     /*Name Date
  *      * comments
  *      *\/
@@ -20,6 +20,7 @@
  *     28/02: comments added
  *     06/03: secure version of system call implemented
  *     09/03: revised syscall implementation, tested
+ *     13/03: fixed format, add more comments, tested
  * To do list:
  *     [x] read the helper functions
  *     [x] finish all tasks
@@ -27,9 +28,11 @@
  *     [x] comments and documentation
  *     [x] check the return value(if any) of all system calls
  *     [x] test again
- *     [ ] format and beauty
+ *     [x] format and beauty
  */
 
+
+/* Header file provided */
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
@@ -39,7 +42,7 @@
 #include <stdio.h>
 #include <string.h>
 
-// header file added, for the exit() function
+/* Header file added, for the exit() function */
 #include <stdlib.h>
 
 #include <expression.h>
@@ -51,7 +54,7 @@
 #define DEBUG
 
 /* Start of declaration of secure version of system calls
- * Implementations are at the end
+ * Implementations are at the end of multical.c
  * ALl parameters and their names are consistant with their man page
  */
 void Close(int fd);
@@ -70,7 +73,8 @@ void print_help()
         "\n"
         "infile:    input file path\n"
         "outfile:   output file path\n"
-        "proc:      Number of child process to spawn\n");
+        "proc:      Number of child process to spawn\n"
+    );
 }
 
 // You can modify child_work parameters as you need
@@ -92,8 +96,8 @@ int child_work(int pipes[][2], int proc, int procid, int outfd)
     // You don't need to close pipes here if it is already done in main.
 
     /*Huang Daoji 28/02
-     * close all the reading ends except for its own, and all writing ends
-     * after this block, only pipe[i][0], infile, outfile needs to handle
+     * close all the reading ends except for its own, and all writing ends.
+     * After this block, only pipe[i][0], infile, outfile needs to be handled
      */
     for (i = 0; i < proc; ++i)
     {
@@ -105,6 +109,9 @@ int child_work(int pipes[][2], int proc, int procid, int outfd)
     // ---------- END TASK 9 ----------
 
     // TASK 10 Get child pid to mypid (5 pts)
+    /*Huang Daoji 13/03
+     * using wrapper function
+     */
     mypid = Getpid();
     // ---------- END TASK 10 ----------
 
@@ -119,8 +126,8 @@ int child_work(int pipes[][2], int proc, int procid, int outfd)
     /*Huang Daoji 28/02
      * using helper function exp_readln, and exp_cal
      * prepare the answer in buffer first, then write to the outfile
-     * notice the "strlen(buf) + 1" part, which includes the final '\n'
-     * close the last pipe here
+     * notice the "strlen(buf) + 1" part which includes the final '\n'
+     * close the last pipe here, in/outfile are closed in main()
      */
 
     while(read(pipes[procid][0], buf, sizeof(buf))){
@@ -167,6 +174,10 @@ int main(int argc, char **argv)
 
     // Declare your variables here
 
+    int in_file = 0, out_file = 0;
+    pid_t parent_pid;
+    int next_child = 0, data_length = 0;
+
     // TASK 1 Open the files. (5 points)
     //
     // Open infile with readonly, outfile with write and append.
@@ -180,8 +191,8 @@ int main(int argc, char **argv)
      * O_APPEND
      */
 
-    int in_file = Open(infile, O_RDONLY);
-    int out_file = Open(outfile, O_WRONLY | O_APPEND);
+    in_file = Open(infile, O_RDONLY);
+    out_file = Open(outfile, O_WRONLY | O_APPEND);
     // ---------- END TASK 1 ----------
 
 #ifdef DEBUG
@@ -189,24 +200,29 @@ int main(int argc, char **argv)
 #endif
 
     // TASK 2 Get parent pid and print to outfile (5 pts)
-    pid_t parent_pid = Getpid();
+
+    /*Huang Daoji 13/03
+     * print it to buf with format first, then print to out_file
+     * for write() system call does not support format
+     * fprintf() support... but it takes in fp instead of fd
+     */
+    parent_pid = Getpid();
     sprintf(buf, "%d\n", parent_pid);
+    Write(out_file, buf, strlen(buf) + 1);
+    // ---------- END TASK 2 ----------
 
 #ifdef DEBUG
     printf("parent pid is: %s", buf);
 #endif
-
-    Write(out_file, buf, strlen(buf) + 1);
-    // ---------- END TASK 2 ----------
 
     // TASK 3 Create pipes (10 pts)
     //
     // $proc pipes should be created and saved to pipes[proc][2]
 
     /*Huang Daoji 28/02
-     * pipe() receives a int[2] array, which is exactly pipes[i]'s type
+     * pipe() takes in a int[2] array, which is exactly pipes[i]'s type
      * returns with the two ends stored in pipes[i][0], and pipes[i][1]
-     * which are file descripters(not FILE*!)
+     * which are file descripters(not fp/FILE*!)
      * return value != 0 indicates error
      * reference: http://man7.org/linux/man-pages/man2/pipe.2.html
      */
@@ -229,7 +245,7 @@ int main(int argc, char **argv)
      * creating children using fork(), and check the return value, if error
      * occurs, print the error message in the command line
      * close the file descripters left open
-     * better close in/out file here, for these files are invisible to
+     * better close in/out file here, for  one of these files is not visible to
      * child_work() function, and children can exit without any problem
      */
     for (i = 0; i < proc; ++i)
@@ -244,10 +260,8 @@ int main(int argc, char **argv)
             Close(in_file);
             Close(out_file);
             exit(0);
-        }else{
-            printf("error in creating children #%d!\n", i);
-            exit(-1);
         }
+        /* no need to handle error here, it is done in the Fork() function */
     }
     // ---------- END TASK 4 ----------
 
@@ -283,8 +297,6 @@ int main(int argc, char **argv)
      * close all the writing ends of pipes
      */
 
-    int next_child = 0;
-    int data_length = 0;
 
 #ifdef DEBUG
     printf("parent pid is: %s\n", buf);
@@ -311,7 +323,7 @@ int main(int argc, char **argv)
     // TASK 7 Wait for children (5 pts)
 
     /*Huang Daoji 28/02
-     * since we have got the pid of each child, better use waitpid() here
+     * since we have got the pid of each child, better use Waitpid() here
      * parent process will check the return status of each child
      */
     for (i = 0; i < proc; ++i)
@@ -338,19 +350,28 @@ int main(int argc, char **argv)
 
 /* Definition of the secure version of system calls */
 
-void Close(int fd){
+/*Huang Daoji 13/03
+ * Notice that we *must* use (tmp = foo()) < 0
+ * not tmp = foo() < 0, which is the same with tmp = (foo() < 0)
+ * fixed 09/03
+ */
+
+void Close(int fd)
+{
     if(close(fd) < 0){
         printf("Error in closing file, fd: %d\n", fd);
         exit(-1);
     }
 }
 
-pid_t Getpid(void){
+pid_t Getpid(void)
+{
     // "These functions are always successful." -- man getpid(2)
     return getpid();
 }
 
-ssize_t Write(int fd, const void* buf, size_t count){
+ssize_t Write(int fd, const void* buf, size_t count)
+{
     ssize_t tmp;
     if((tmp = write(fd, buf, count)) < 0){
         printf("Error in write %s to file %d\n", buf, fd);
@@ -359,7 +380,8 @@ ssize_t Write(int fd, const void* buf, size_t count){
     return tmp;
 }
 
-int Open(const char* pathname, int flags){
+int Open(const char* pathname, int flags)
+{
     int tmp;
     if((tmp = open(pathname, flags)) < 0){
         printf("Error in open file %s\n", pathname);
@@ -368,7 +390,8 @@ int Open(const char* pathname, int flags){
     return tmp;
 }
 
-int Pipe(int pipefd[2]){
+int Pipe(int pipefd[2])
+{
     int tmp;
     if((tmp = pipe(pipefd)) < 0){
         printf("Error in create pipe\n");
@@ -377,7 +400,8 @@ int Pipe(int pipefd[2]){
     return tmp;
 }
 
-pid_t Fork(void){
+pid_t Fork(void)
+{
     pid_t pid;
     if((pid = fork()) < 0){
         printf("Error in fork()\n");
@@ -386,7 +410,8 @@ pid_t Fork(void){
     return pid;
 }
 
-pid_t Waitpid(pid_t pid, int* iptr, int options){
+pid_t Waitpid(pid_t pid, int* iptr, int options)
+{
     pid_t child_pid;
     if((child_pid = waitpid(pid, iptr, options)) < 0){
         printf("Error in waiting for child %d\n", pid);
