@@ -206,4 +206,44 @@ OS design and implementation
     - but reduce speed and increased storage requirements
 - major performance improvement from: better data structure and algorithms and a small amount of code is critical
 
-##### 2.8
+OS structure
+- common approach: partition the task into small components / modules
+- monolithic structure
+    - e.g. oringinal UNIX, consists of two separable parts: kernel and system program
+    - everything below the system call interface and above the physical hardware is the kernel
+    - kernel runs entirely in kernel mode in a single address space
+    - difficult to implement and extend
+    - very little overhead in system call interface, communication within the kernel is fast
+- layered approach
+    - divide into separable, smaller components; changes in one component affect only that component
+    - in layered method, system is broken into a number of layers, which can invoke operations on lower-level layers
+    - simplicity of construction and debugging
+    - hides the existence of certain data structures, operations and hardware from higher-level layers
+- microkernels
+    - removing all nonessential components to user-level, reside in separate address spaces
+    - extending the OS easy, easy to port to another hardware
+    - more security and reliability
+    - increased system-function overhead
+- modules
+    - loadable kernel modules: kernel has a set fo core components and can link in additional services via modules
+    - more flexible than a layered system
+    - more efficient, for modules donot need to invoke message passing to communicate
+- diff. between macOS and iOS
+    - mac on desktop, ios on mobile devices -> power management and aggressive memory management
+    - ios more restricted to dev.
+
+building and booting an OS
+- when to link modules? at compile time / at execution time
+    - first for embedding systems, second for mobile devices
+- system boot
+    - bootstrap program / boot loader locates the kernel -> kernel started -> kernel initialize hardware -> file system mounted
+    - initial boot loader load a second bootloader, which is at a fixed disk location(boot clock), the second bootloader may be able to load the whole system, or knows only the address and length of the remainder load code
+
+OS debugging
+- write error information to a log file
+- save memory to a crash dump, to the disk area
+- /proc file system in linux
+- BCC
+    - debug any area of a system
+    - have a minimal performance impact
+    - do not affect system performance or security
