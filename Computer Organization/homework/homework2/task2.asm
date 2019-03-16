@@ -63,6 +63,7 @@ Test:
 Next_while:
 	
 	add $t1, $zero, $zero
+	j Cond
 Body:
     add $t2, $t1, $zero
     add $t2, $t2, $s0

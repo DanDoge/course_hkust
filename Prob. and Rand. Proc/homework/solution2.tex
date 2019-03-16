@@ -127,7 +127,7 @@
                 &= \sum_{1}^{+\infty} x^{2}(0.7 * P_{1}(x) + 0.3 * P_{2}(x)) - (E[X])^{2} \\
                 &= 0.7 * \sum_{1}^{+\infty} x^{2}P_{1}(x) + 0.3 \sum_{1}^{+\infty} x^{2}P_{2}(x) - (E[X])^{2} \\
                 &= 0.7 * 15 + 0.3 * 6 - 2.7^{2} \\
-                &= \mbox{calculate later}
+                &= 5.01 \\
             \end{aligned}
         \end{equation*}
 
@@ -287,5 +287,60 @@
                 &= e^{-\frac{1}{2}} \\
             \end{aligned}
         \end{equation*}
+
+\section*{Problem 5}
+    \textbf{a}: The cdf of $Y$ is
+        \begin{equation*}
+            \begin{aligned}
+                F[Y] &= P(y \leq Y) \\
+                &= P(0.25x - 37.5 \leq Y) \\
+                &= P(x \leq 4(Y + 37.5)) \\
+                &= \frac{4(Y + 37.5) - 150}{2600 - 150} \\
+            \end{aligned}
+        \end{equation*}
+    for $4(Y + 37.5) \in [150, 2600]$, so the pdf of $Y$ is the derivitive of its cdf function
+        \begin{equation*}
+            \begin{aligned}
+                f(y) &= \frac{4}{2600 - 150} \\
+            \end{aligned}
+        \end{equation*}
+    for $Y \in [37.5, 612.5]$, 0 otherwise. \\
+    \begin{tikzpicture}
+        \begin{axis}[
+            xmin = 0,
+            ymin = 0,
+            xlabel = Y,
+            ylabel = pdf,
+            ]
+            \addplot[domain=37.5:612.5, color=blue, very thick]
+                {4 / (2600 - 150)};
+            \addplot[domain=0:37.5, color=blue, very thick]
+                {0};
+            \addplot[domain=612.5:650]
+                {0};
+        \end{axis}
+    \end{tikzpicture} \\
+    \textbf{b}: From $Y = 0.25X - 37.5$ and $E[X] = \frac{150 + 2600}{2}, Var[X] = \frac{(2600 - 150)^{2}}{12}$, we have
+        \begin{equation*}
+            \begin{aligned}
+                E[Y] &= 0.25E[X] - 37.5 \\
+                &= 325 \\
+                Var[Y] &= 0.25^{2}Var[X] \\
+                &= 27552.0833 \\
+            \end{aligned}
+        \end{equation*}
+    \textbf{c}: Follow the procedure in 5.a, we have
+        \begin{equation*}
+            \begin{aligned}
+                F[Z] &= P(z \leq Z) \\
+                &= P(4x^{2} \leq Z) \\
+                &= P(x \leq \sqrt{Z} / 2),\quad for\ P(X \leq 0) = 0 \\
+                &= \frac{\sqrt{Z} / 2 - 150}{2600 - 150} \\
+                f(z) &= \frac{d}{dz}F[Z] \\
+                &= \frac{1}{2450} z^{-1/2} \\
+            \end{aligned}
+        \end{equation*}
+    for $z \in [90000, 27040000]$, 0 otherwise.
+
 
 \end{document}

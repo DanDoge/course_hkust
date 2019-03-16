@@ -39,7 +39,81 @@ main:
 # you can use $s1 and $s2, which are character '0' and '1'
 # 1. you should store the binary representation in $s0 (base address of the bin array)
 to_binary:
+	
+#Huang Daoji 16/03
+# To do list:
+#    [x] run and test 16/03
+#    [ ] full comments
+#    [ ] optimization
+#          [ ] reduce redundant registers	
+#          [ ] control flow optimization
 
+	addi $sp, $sp, -4
+	sw $ra, 0($sp)
+
+
+	add $s4, $zero, $a0
+	li $t1, -2147483648
+	bne $s4, $t1, L1
+	
+	sb $s2, 0($s0)
+	addi $t1, $zero, 1
+	j Cond_1
+	Body_1: 
+		add $t2, $t1, $s0
+		sb $s1, 0($t2)
+	Inc_1:
+		addi $t1, $t1, 1
+	Cond_1:
+		blt $t1, 32, Body_1
+	
+	j Return
+
+L1:
+	add $s5, $s4, $zero
+	bge $s4, $zero, L2
+	not $s4, $s4
+	addi $s4, $s4, 1
+
+L2:
+	addi $t1, $zero, 31
+	j Cond_2
+	Body_2:
+		andi $t2, $s4, 1
+		add $t3, $s0, $t1
+		beqz $t2, Else_1
+			sb $s2, 0($t3)
+			j Next_if
+		Else_1:
+			sb $s1, 0($t3)
+		Next_if:
+			srl $s4, $s4, 1
+	Inc_2:
+		addi $t1, $t1, -1
+	Cond_2:
+		bgez $t1, Body_2
+	
+	bgez $s5, Return
+		addi $t1, $zero, 31
+		j Cond_3
+		Body_3:
+			add $t2, $t1, $s0
+			lb $t3, 0($t2)
+			beq $t3, $s1, Else_2
+				sb $s1, 0($t2)
+				j Inc_3
+			Else_2:
+				sb $s2, 0($t2)
+		Inc_3:
+			addi $t1, $t1, -1
+		Cond_3:
+			bgez $t1, Body_3
+		
+		jal add_one
+
+Return:
+	lw $ra, 0($sp)
+	addi $sp, $sp, 4
     jr $ra # last line of to_binary
 # ---------- TODO end ----------
 
