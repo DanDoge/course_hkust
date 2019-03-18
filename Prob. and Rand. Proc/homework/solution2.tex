@@ -296,6 +296,7 @@
                 &= P(0.25x - 37.5 \leq Y) \\
                 &= P(x \leq 4(Y + 37.5)) \\
                 &= \frac{4(Y + 37.5) - 150}{2600 - 150} \\
+                &= 0.001633 \\
             \end{aligned}
         \end{equation*}
     for $4(Y + 37.5) \in [150, 2600]$, so the pdf of $Y$ is the derivitive of its cdf function
@@ -304,7 +305,7 @@
                 f(y) &= \frac{4}{2600 - 150} \\
             \end{aligned}
         \end{equation*}
-    for $Y \in [37.5, 612.5]$, 0 otherwise. \\
+    for $Y \in [0, 612.5]$, 0 otherwise. \\
     \begin{tikzpicture}
         \begin{axis}[
             xmin = 0,
@@ -312,10 +313,8 @@
             xlabel = Y,
             ylabel = pdf,
             ]
-            \addplot[domain=37.5:612.5, color=blue, very thick]
+            \addplot[domain=0:612.5, color=blue, very thick]
                 {4 / (2600 - 150)};
-            \addplot[domain=0:37.5, color=blue, very thick]
-                {0};
             \addplot[domain=612.5:650]
                 {0};
         \end{axis}
@@ -324,9 +323,9 @@
         \begin{equation*}
             \begin{aligned}
                 E[Y] &= 0.25E[X] - 37.5 \\
-                &= 325 \\
+                &= 306.25 \\
                 Var[Y] &= 0.25^{2}Var[X] \\
-                &= 27552.0833 \\
+                &= 31263.0208 \\
             \end{aligned}
         \end{equation*}
     \textbf{c}: Follow the procedure in 5.a, we have
@@ -337,7 +336,7 @@
                 &= P(x \leq \sqrt{Z} / 2),\quad for\ P(X \leq 0) = 0 \\
                 &= \frac{\sqrt{Z} / 2 - 150}{2600 - 150} \\
                 f(z) &= \frac{d}{dz}F[Z] \\
-                &= \frac{1}{2450} z^{-1/2} \\
+                &= \frac{1}{9800} z^{-1/2} \\
             \end{aligned}
         \end{equation*}
     for $z \in [90000, 27040000]$, 0 otherwise.

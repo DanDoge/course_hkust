@@ -42,46 +42,58 @@ to_binary:
 	
 #Huang Daoji 16/03
 # To do list:
-#    [x] run and test 16/03
-#    [ ] full comments
-#    [ ] optimization
-#          [ ] reduce redundant registers	
-#          [ ] control flow optimization
+#    [x] run and test
+#    [x] full comments
+#    [x] optimization
+#          [x] reduce redundant registers	
+#          [x] control flow optimization
+#    [x] test case: 1, 2, 1024, MAX_INT, MIN_INT, MIN_INT + 1, 2611, -2611
 
-	addi $sp, $sp, -4
+	# save registers
+	addi $sp, $sp, -16
+	sw $s3, 12($sp)
+	sw $s4, 8($sp)
+	sw $s5, 4($sp)
 	sw $ra, 0($sp)
 
-
+	# $s4 for x
 	add $s4, $zero, $a0
 	li $t1, -2147483648
 	bne $s4, $t1, L1
 	
+	# for in the first if
 	sb $s2, 0($s0)
+	# $t1 for i
 	addi $t1, $zero, 1
 	j Cond_1
 	Body_1: 
+		# save '0' to bin[i]
 		add $t2, $t1, $s0
 		sb $s1, 0($t2)
 	Inc_1:
 		addi $t1, $t1, 1
 	Cond_1:
 		blt $t1, 32, Body_1
-	
+	# end of for
 	j Return
 
 L1:
 	add $s5, $s4, $zero
 	bge $s4, $zero, L2
+	# -x = ~x + 1
 	not $s4, $s4
 	addi $s4, $s4, 1
+	# from here, $s4 for ans_x, $s5 for x
 
 L2:
+	# the second for
 	addi $t1, $zero, 31
 	j Cond_2
 	Body_2:
 		andi $t2, $s4, 1
 		add $t3, $s0, $t1
 		beqz $t2, Else_1
+			# if abs_x & 1 == 1, execute here
 			sb $s2, 0($t3)
 			j Next_if
 		Else_1:
@@ -93,7 +105,10 @@ L2:
 	Cond_2:
 		bgez $t1, Body_2
 	
+	# x >= 0, return 
 	bgez $s5, Return
+		# x < 0 here
+		# $t1 for i
 		addi $t1, $zero, 31
 		j Cond_3
 		Body_3:
@@ -112,8 +127,12 @@ L2:
 		jal add_one
 
 Return:
+	# restore the saved registers
+	lw $s3, 12($sp)
+	lw $s4, 8($sp)
+	lw $s5, 4($sp)
 	lw $ra, 0($sp)
-	addi $sp, $sp, 4
+	addi $sp, $sp, 16
     jr $ra # last line of to_binary
 # ---------- TODO end ----------
 

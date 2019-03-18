@@ -42,13 +42,14 @@ prime_factorization:
 
 #Huang Daoji 15/03
 # To do list:
-#    [x] run and test 15/03
-#    [ ] full comments
-#    [ ] register using convention
-#    [ ] optimization
+#    [x] run and test
+#    [x] full comments
+#    [x] register using convention
+#    [x] optimization
 #          [x] replace sll with addi for $t4
 #          [x] replace all 0 by $zero, hope it will run faster...
 #          [x] reduce redundant registers
+#    [x] test case: 2, 2611, 162, 1024, 8, 373
 
 # save $ra
 	addi $sp, $sp, -4
@@ -57,22 +58,31 @@ prime_factorization:
 	addi $t0, $zero, 2
 	add $t5, $a0, $zero
 	add $t4, $zero, $s0
+# we translate while(True){A} into 
+# While: A goto While, and for the A is a if(){}else{} statment
+# we move in the 'goto While' to avoid the case where we have to jump twice
+# similar to '.nextlist' method in the book 
+# Compilers: Principles Techniques and Tools
 While:
 	add $a0, $t5, $zero
 	add $a1, $t0, $zero
 	jal divide
-	
+	# if begin
 	bne $v1, $zero, Else
-	
-	sw $t0, 0($t4)
-	addi $t4, $t4, 4
-	addi $s1, $s1, 1
-	add $t5, $v0, $zero
-	beq $t5, 1, Return
-	j While
-Else:
-	addi $t0, $t0, 1
-	j While
+		# remainder == 0 case
+		sw $t0, 0($t4)
+		# let $t4 plus 4 instead of computing it each time
+		addi $t4, $t4, 4
+		addi $s1, $s1, 1
+		add $t5, $v0, $zero
+		beq $t5, 1, Return
+		j While
+		
+	Else:
+		addi $t0, $t0, 1
+		j While
+	# if end
+		
 Return:
 # restore $ra
 	lw $ra, 4($sp)

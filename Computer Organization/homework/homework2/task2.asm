@@ -43,39 +43,58 @@ run_length_decode:
 
 #Huang Daoji 16/03
 # To do list:
-#    [x] run and test 16/03
-#    [ ] full comments
-#    [ ] optimization
+#    [x] run and test
+#    [x] full comments
+#    [x] optimization
 #          [x] trick: using one unsigned instruction checking 0 < c < 9
 #                     refer to MIPS tutorial on its official website
-#          [ ] reduce redundant registers
+#          [x] reduce redundant registers
+#    [x] test cases: 2C6O1M1P, 12M3I4P5S, 0A, 1A0B1C, 100A
 
+# save the saved registers
+	addi $sp, $sp, 12
+	sw $s2, 8($sp)
+	sw $s3, 4($sp)
+	sw $s4, 0($sp)
+
+
+# $s2 for len, $s3 for k, $s4 for num_letter
 	add $s2, $zero, $zero
 	add $s3, $zero, $zero
     add $s4, $zero, $zero
-    
+   
+# while(cond){A} translates into 'cond, A, goto cond' 
 Test:
 	add $t1, $s2, $s0
 	lb $t1, 0($t1)
 	beq $t1, $zero, Next_while
+	
 	addi $s2, $s2, 1
 	j Test
-Next_while:
-	
+
+# for(init, cond, inc){A} translate into 'init, goto cond, A, inc, cond'
+# which is consistant with its meaning in C/C++
+Next_while:	
+	# $t1 for i
 	add $t1, $zero, $zero
 	j Cond
 Body:
+	# $t2 for c, $t3 for c - '0'
     add $t2, $t1, $zero
     add $t2, $t2, $s0
 	lb $t2, 0($t2)
 	
 	addi $t3, $t2, -48
+	# best way to compare if 0<=c<=9, as said in MIPS official tutorial
 	bgtu $t3, 9, Else
-	mul $s4, $s4, 10
-	add $s4, $s4, $t3
-	j Inc
-Else:
+	# cond(in if) is true
+		mul $s4, $s4, 10
+		add $s4, $s4, $t3
+		j Inc
+	Else:
+		# $t4 for j
 		add $t4, $zero, $zero
+		j Cond_nested
 		Body_nested:
 			add $t5, $s3, $s1
 			sb $t2, 0($t5)
@@ -96,9 +115,15 @@ Cond:
 	j Next_for
 
 Next_for:
+	# add the last \0
 	add $t1, $s1, $s3
 	lb $zero, ($t1)
 
+	# load the saved registers
+	lw $s2, 8($sp)
+	lw $s3, 4($sp)
+	lw $s4, 0($sp)
+	addi $sp, $sp, -12
     
     jr $ra # last line of run_length_decode
 # ---------- TODO end ----------
