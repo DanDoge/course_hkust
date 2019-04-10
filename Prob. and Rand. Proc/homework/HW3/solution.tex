@@ -169,6 +169,17 @@
                 &= P_{X}(x) \times P_{Y}(y) \\
             \end{aligned}
         \end{equation*}
+    \subsection*{f}
+        From the pmf of $X, Z$ and marginal pmf of $Z$, we have
+        \begin{equation*}
+            \begin{aligned}
+                P_{X | Z}(x) &= (\frac{3^{z}}{x!(z - x)!} 0.4^{x} 0.6^{z - x} e^{-3}) / (\frac{3^{z}}{z!}e^{-3}) \\
+                &= \frac{z!}{x!(z - x)!} 0.4^{x} 0.6^{z - x},
+            \end{aligned}
+        \end{equation*}
+        which belongs to binomial distribution with paremeter $(n, p) = (z, 0.4)$.
+    \subsection*{g}
+        From the result in $(f)$, the conditional expectation of $X$ is $E[X | Z] = 0.4Z$.
 
 
 
