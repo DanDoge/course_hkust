@@ -18,6 +18,31 @@
 // All rights reserved.  See copyright.h for copyright notice and limitation
 // of liability and disclaimer of warranty provisions.
 
+/*Huang Daoji Student ID: 20623420
+ * This implementation basically follows the README file and the algorithms
+ * thaught in the lectures. I referred to the lecture notes while coding.
+ *
+ * My comments(more than one lines) will take the form below
+ *    /*Name Date
+ *     * comments
+ *     *\/
+ * to not be confused with the comments given.
+ *
+ * In the MLFQ, MLFQ[2] is the queue with highest priority
+ * to be consistant with the fact that each process is created with priority 2
+ * and it cannot be inversed for the 'main' thread also has priority 2
+ * otherwise we have to hard-code for 'main' thread switching to threadA correctly
+ */
+
+/*To-Do List
+ * [x] 09/04 RR
+ * [x] 09/04 PRIO_P
+ * [x] 11/04 MLFQ
+ * [ ] check the correctness of output
+ * [ ] answer the questions
+ * [ ] full comments
+ */
+
 #include "scheduler.h"
 #include "copyright.h"
 #include "system.h"
@@ -88,7 +113,16 @@ void Scheduler::ReadyToRun(Thread *thread) {
     /*Huang Daoji 10/04
      * insert to the first queue
      */
-    MultiLevelList[0].Append(thread);
+    int list_to_insert = thread->getPriority();
+    if(thread->getQuantum() != 0){
+        MultiLevelList[list_to_insert].Prepend(thread);
+    }else{
+        MultiLevelList[list_to_insert].Append(thread);
+        thread->setQuantum(12 - 4 * list_to_insert); // 2 -> 4, 1 -> 8
+        if(thread->getPriority() == 0){
+            thread->setQuantum(thread->getBurstTime() - 12);
+        }
+    }
     break;
   }
 
@@ -127,7 +161,7 @@ Thread *Scheduler::FindNextToRun() {
 
   case SCHED_PRIO_P: {
     // YOUR PROJECT2 CODE HERE
-    /*Huang Daoji
+    /*Huang Daoji 09/04
      * the first thread has the highest priority
      */
     next_to_run = readyList->Remove();
@@ -136,26 +170,24 @@ Thread *Scheduler::FindNextToRun() {
 
   case SCHED_MLFQ: {
     // YOUR PROJECT2 CODE HERE
-    /*Huang Daoji 10/04
+    /*Huang Daoji 11/04
      * check the first queue, then the second and the last
      * set the time quantum and priority correctly
      */
     next_to_run = NULL;
-    if (MultiLevelList[0].IsEmpty()){
+    if (MultiLevelList[2].IsEmpty()){
         if (MultiLevelList[1].IsEmpty()){
             next_to_run = MultiLevelList[2].Remove();
             if(next_to_run){
-                next_to_run->setPriority(2);
+                next_to_run->setPriority(0);
             }
         }else{
             next_to_run = MultiLevelList[1].Remove();
-            next_to_run->setQuantum(8);
             next_to_run->setPriority(1);
         }
     }else{
-        next_to_run = MultiLevelList[0].Remove();
-        next_to_run->setQuantum(4);
-        next_to_run->setPriority(0);
+        next_to_run = MultiLevelList[2].Remove();
+        next_to_run->setPriority(2);
     }
     break;
   }
@@ -208,12 +240,12 @@ bool Scheduler::ShouldISwitch(Thread *oldThread, Thread *newThread) {
 
   case SCHED_MLFQ: {
     // YOUR PROJECT2 CODE HERE
-    /*Huang Daoji 10/04
+    /*Huang Daoji 11/04
      * switch to the new-arrived thread only when its in a higher queue
      * i.e. the new thread has a smaller priority
      */
     doSwitch = false;
-    if(newThread->getPriority() < oldThread->getPriority()){
+    if(newThread->getPriority() > oldThread->getPriority()){
         doSwitch = true;
     }
     break;
@@ -402,17 +434,10 @@ void Scheduler::InterruptHandler(int dummy) {
      * give up executing if it's in the first two levels of queues
      * and has used up its time quantum
      */
-    if(currentThread->getPriority() != 2){
-        if(currentThread->decrementQuantum() == 0){
-            interrupt->YieldOnReturn();
-            //MultiLevelList[currentThread->getPriority()].Remove();
-            MultiLevelList[currentThread->getPriority() + 1].Append(currentThread);
-            currentThread->setPriority(currentThread->getPriority() + 1);
-            for(int i = 0; i < 3; i += 1){
-                if(MultiLevelList[i].Peek()){
-                    printf("%d: %s\n", i, MultiLevelList[i].Peek()->getName());
-                }
-            }
+    if(currentThread->decrementQuantum() == 0){
+        interrupt->YieldOnReturn();
+        if(currentThread->getPriority() != 0){
+            currentThread->setPriority(currentThread->getPriority() - 1);
         }
     }
     break;
