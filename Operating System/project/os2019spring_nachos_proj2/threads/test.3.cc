@@ -18,12 +18,12 @@
 
 void ThreadTest3() {
 
-  int numThreads = 5;
+  int numThreads = 8;
   int NumOfLevel = 20;
   // YOUR PROJECT2 CODE HERE:
-  int startTime[] = {13, 0, 50, 18, 10};
-  int burstTime[] = {25, 17, 12, 6, 10};
-  int priority[] = {2, 2, 2, 2, 2};
+  int startTime[] = {13, 0, 20, 18, 10, 7, 12, 6};
+  int burstTime[] = {15, 9, 3, 18, 32, 2, 14, 19};
+  int priority[] = {2, 2, 2, 2, 2, 2, 2, 2};
   schedpair *a_pair;
 
   List<schedpair *> *procList = new List<schedpair *>();

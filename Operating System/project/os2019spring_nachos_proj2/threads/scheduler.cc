@@ -38,9 +38,9 @@
  * [x] 09/04 RR
  * [x] 09/04 PRIO_P
  * [x] 11/04 MLFQ
- * [ ] check the correctness of output
+ * [x] 14/04 full comments
+ * [x] 15/04 check the correctness of output. I think its correct
  * [ ] answer the questions
- * [ ] full comments
  */
 
 #include "scheduler.h"
@@ -80,7 +80,7 @@ Scheduler::~Scheduler() {
 //----------------------------------------------------------------------
 
 void Scheduler::ReadyToRun(Thread *thread) {
-  DEBUG('t', "Putting thread %s on ready list.\n", thread->getName());
+  DEBUG('t', "Putting thread %s on ready list, with policy %d.\n", thread->getName(), policy);
 
   thread->setStatus(READY);
   switch (policy) {
@@ -103,15 +103,20 @@ void Scheduler::ReadyToRun(Thread *thread) {
     // YOUR PROJECT2 CODE HERE
     /*Huang Daoji 09/04
      * insert the new thread into (sorted) ready queue
+     * subtract it with MAX_PRIORITY to make sure thread with highest priority
+     * will be put to the head of the readyList
      */
-    readyList->SortedInsert(thread, 2147483647 - thread->getPriority());
+    readyList->SortedInsert(thread, thread->MAX_PRIORITY - thread->getPriority());
     break;
   }
 
   case SCHED_MLFQ: {
     // YOUR PROJECT2 CODE HERE
-    /*Huang Daoji 10/04
-     * insert to the first queue
+    /*Huang Daoji 14/04
+     * first check whether it has been preempted, if so, put back to where it belongs
+     * then find its corresponding queue by checking it priority
+     * insert to the first queue if it has priority 2
+     * second if 1, FCFS queue if 0
      */
     int list_to_insert = thread->getPriority();
     if(thread->getQuantum() != 0){
@@ -120,9 +125,14 @@ void Scheduler::ReadyToRun(Thread *thread) {
         MultiLevelList[list_to_insert].Append(thread);
         thread->setQuantum(12 - 4 * list_to_insert); // 2 -> 4, 1 -> 8
         if(thread->getPriority() == 0){
-            thread->setQuantum(thread->getBurstTime() - 12);
+            /*Huang Daoji 14/04
+             * for process coming in FCFS queue for the first time
+             * assign its time quantum to be its remained burstTime
+             */
+            thread->setQuantum(thread->getBurstTime() - 11);
         }
     }
+    DEBUG('t', "Putting thread %s on %d ready list.\n", thread->getName(), thread->getPriority());
     break;
   }
 
@@ -170,17 +180,22 @@ Thread *Scheduler::FindNextToRun() {
 
   case SCHED_MLFQ: {
     // YOUR PROJECT2 CODE HERE
-    /*Huang Daoji 11/04
+    /*Huang Daoji 14/04
      * check the first queue, then the second and the last
-     * set the time quantum and priority correctly
+     * double check the priority, just in case sth goes wrong
      */
     next_to_run = NULL;
     if (MultiLevelList[2].IsEmpty()){
         if (MultiLevelList[1].IsEmpty()){
-            next_to_run = MultiLevelList[2].Remove();
+            next_to_run = MultiLevelList[0].Remove();
             if(next_to_run){
                 next_to_run->setPriority(0);
-            }
+            }/*else{
+                next_to_run = readyList.Remove();
+                if(next_to_run){
+                    next_to_run->setPriority(0);
+                }
+            }*/
         }else{
             next_to_run = MultiLevelList[1].Remove();
             next_to_run->setPriority(1);
@@ -430,9 +445,11 @@ void Scheduler::InterruptHandler(int dummy) {
 
   case SCHED_MLFQ: {
     // YOUR PROJECT2 CODE HERE
-    /*Huang Daoji 10/04
+    /*Huang Daoji 14/04
      * give up executing if it's in the first two levels of queues
      * and has used up its time quantum
+     * set its priority s.t. when it calls ReadyToRun()
+     * we know which list to insert into
      */
     if(currentThread->decrementQuantum() == 0){
         interrupt->YieldOnReturn();
