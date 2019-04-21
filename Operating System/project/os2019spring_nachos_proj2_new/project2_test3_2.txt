@@ -1,0 +1,169 @@
+Multi level feedback queue scheduling
+Starting at Elapesd ticks: total 0
+Queuing threads.
+Queuing thread threadA at Time 0, priority 2, willing to burst 9 ticks
+Switching from thread "main" to thread "threadA"
+threadA, Starting Burst of 9 ticks. Elapesd ticks: total 0
+threadA, Still 8 to go. Priority 2. Quantum 3. Elapesd ticks: total 1
+threadA, Still 7 to go. Priority 2. Quantum 2. Elapesd ticks: total 2
+threadA, Still 6 to go. Priority 2. Quantum 1. Elapesd ticks: total 3
+threadA, Still 5 to go. Priority 1. Quantum 8. Elapesd ticks: total 4
+threadA, Still 4 to go. Priority 1. Quantum 7. Elapesd ticks: total 5
+Queuing thread threadB at Time 6, priority 2, willing to burst 19 ticks
+Switching from thread "threadA" to thread "threadB"
+threadB, Starting Burst of 19 ticks. Elapesd ticks: total 6
+Queuing thread threadC at Time 7, priority 2, willing to burst 2 ticks
+threadB, Still 18 to go. Priority 2. Quantum 3. Elapesd ticks: total 7
+threadB, Still 17 to go. Priority 2. Quantum 2. Elapesd ticks: total 8
+threadB, Still 16 to go. Priority 2. Quantum 1. Elapesd ticks: total 9
+Queuing thread threadD at Time 10, priority 2, willing to burst 32 ticks
+Switching from thread "threadB" to thread "threadC"
+threadC, Starting Burst of 2 ticks. Elapesd ticks: total 10
+threadC, Still 1 to go. Priority 2. Quantum 3. Elapesd ticks: total 11
+Queuing thread threadE at Time 12, priority 2, willing to burst 14 ticks
+threadC, Still 0 to go. Priority 2. Quantum 2. Elapesd ticks: total 12
+threadC, Done with burst. Elapesd ticks: total 12
+Switching from thread "threadC" to thread "threadD"
+threadD, Starting Burst of 32 ticks. Elapesd ticks: total 12
+Queuing thread threadF at Time 13, priority 2, willing to burst 15 ticks
+threadD, Still 31 to go. Priority 2. Quantum 3. Elapesd ticks: total 13
+threadD, Still 30 to go. Priority 2. Quantum 2. Elapesd ticks: total 14
+threadD, Still 29 to go. Priority 2. Quantum 1. Elapesd ticks: total 15
+Switching from thread "threadD" to thread "threadE"
+threadE, Starting Burst of 14 ticks. Elapesd ticks: total 16
+threadE, Still 13 to go. Priority 2. Quantum 3. Elapesd ticks: total 17
+Queuing thread threadG at Time 18, priority 2, willing to burst 18 ticks
+threadE, Still 12 to go. Priority 2. Quantum 2. Elapesd ticks: total 18
+threadE, Still 11 to go. Priority 2. Quantum 1. Elapesd ticks: total 19
+Queuing thread threadH at Time 20, priority 2, willing to burst 3 ticks
+Switching from thread "threadE" to thread "threadF"
+threadF, Starting Burst of 15 ticks. Elapesd ticks: total 20
+threadF, Still 14 to go. Priority 2. Quantum 3. Elapesd ticks: total 21
+threadF, Still 13 to go. Priority 2. Quantum 2. Elapesd ticks: total 22
+threadF, Still 12 to go. Priority 2. Quantum 1. Elapesd ticks: total 23
+Switching from thread "threadF" to thread "threadG"
+threadG, Starting Burst of 18 ticks. Elapesd ticks: total 24
+threadG, Still 17 to go. Priority 2. Quantum 3. Elapesd ticks: total 25
+threadG, Still 16 to go. Priority 2. Quantum 2. Elapesd ticks: total 26
+threadG, Still 15 to go. Priority 2. Quantum 1. Elapesd ticks: total 27
+Switching from thread "threadG" to thread "threadH"
+threadH, Starting Burst of 3 ticks. Elapesd ticks: total 28
+threadH, Still 2 to go. Priority 2. Quantum 3. Elapesd ticks: total 29
+threadH, Still 1 to go. Priority 2. Quantum 2. Elapesd ticks: total 30
+threadH, Still 0 to go. Priority 2. Quantum 1. Elapesd ticks: total 31
+threadH, Done with burst. Elapesd ticks: total 31
+Switching from thread "threadH" to thread "threadA"
+threadA, Still 3 to go. Priority 1. Quantum 6. Elapesd ticks: total 31
+threadA, Still 2 to go. Priority 1. Quantum 5. Elapesd ticks: total 32
+threadA, Still 1 to go. Priority 1. Quantum 4. Elapesd ticks: total 33
+threadA, Still 0 to go. Priority 1. Quantum 3. Elapesd ticks: total 34
+threadA, Done with burst. Elapesd ticks: total 34
+Switching from thread "threadA" to thread "threadB"
+threadB, Still 15 to go. Priority 1. Quantum 8. Elapesd ticks: total 34
+threadB, Still 14 to go. Priority 1. Quantum 7. Elapesd ticks: total 35
+threadB, Still 13 to go. Priority 1. Quantum 6. Elapesd ticks: total 36
+threadB, Still 12 to go. Priority 1. Quantum 5. Elapesd ticks: total 37
+threadB, Still 11 to go. Priority 1. Quantum 4. Elapesd ticks: total 38
+threadB, Still 10 to go. Priority 1. Quantum 3. Elapesd ticks: total 39
+threadB, Still 9 to go. Priority 1. Quantum 2. Elapesd ticks: total 40
+threadB, Still 8 to go. Priority 1. Quantum 1. Elapesd ticks: total 41
+Switching from thread "threadB" to thread "threadD"
+threadD, Still 28 to go. Priority 1. Quantum 8. Elapesd ticks: total 42
+threadD, Still 27 to go. Priority 1. Quantum 7. Elapesd ticks: total 43
+threadD, Still 26 to go. Priority 1. Quantum 6. Elapesd ticks: total 44
+threadD, Still 25 to go. Priority 1. Quantum 5. Elapesd ticks: total 45
+threadD, Still 24 to go. Priority 1. Quantum 4. Elapesd ticks: total 46
+threadD, Still 23 to go. Priority 1. Quantum 3. Elapesd ticks: total 47
+threadD, Still 22 to go. Priority 1. Quantum 2. Elapesd ticks: total 48
+threadD, Still 21 to go. Priority 1. Quantum 1. Elapesd ticks: total 49
+Switching from thread "threadD" to thread "threadE"
+threadE, Still 10 to go. Priority 1. Quantum 8. Elapesd ticks: total 50
+threadE, Still 9 to go. Priority 1. Quantum 7. Elapesd ticks: total 51
+threadE, Still 8 to go. Priority 1. Quantum 6. Elapesd ticks: total 52
+threadE, Still 7 to go. Priority 1. Quantum 5. Elapesd ticks: total 53
+threadE, Still 6 to go. Priority 1. Quantum 4. Elapesd ticks: total 54
+threadE, Still 5 to go. Priority 1. Quantum 3. Elapesd ticks: total 55
+threadE, Still 4 to go. Priority 1. Quantum 2. Elapesd ticks: total 56
+threadE, Still 3 to go. Priority 1. Quantum 1. Elapesd ticks: total 57
+Switching from thread "threadE" to thread "threadF"
+threadF, Still 11 to go. Priority 1. Quantum 8. Elapesd ticks: total 58
+threadF, Still 10 to go. Priority 1. Quantum 7. Elapesd ticks: total 59
+threadF, Still 9 to go. Priority 1. Quantum 6. Elapesd ticks: total 60
+threadF, Still 8 to go. Priority 1. Quantum 5. Elapesd ticks: total 61
+threadF, Still 7 to go. Priority 1. Quantum 4. Elapesd ticks: total 62
+threadF, Still 6 to go. Priority 1. Quantum 3. Elapesd ticks: total 63
+threadF, Still 5 to go. Priority 1. Quantum 2. Elapesd ticks: total 64
+threadF, Still 4 to go. Priority 1. Quantum 1. Elapesd ticks: total 65
+Switching from thread "threadF" to thread "threadG"
+threadG, Still 14 to go. Priority 1. Quantum 8. Elapesd ticks: total 66
+threadG, Still 13 to go. Priority 1. Quantum 7. Elapesd ticks: total 67
+threadG, Still 12 to go. Priority 1. Quantum 6. Elapesd ticks: total 68
+threadG, Still 11 to go. Priority 1. Quantum 5. Elapesd ticks: total 69
+threadG, Still 10 to go. Priority 1. Quantum 4. Elapesd ticks: total 70
+threadG, Still 9 to go. Priority 1. Quantum 3. Elapesd ticks: total 71
+threadG, Still 8 to go. Priority 1. Quantum 2. Elapesd ticks: total 72
+threadG, Still 7 to go. Priority 1. Quantum 1. Elapesd ticks: total 73
+Switching from thread "threadG" to thread "threadB"
+threadB, Still 7 to go. Priority 0. Quantum 8. Elapesd ticks: total 74
+threadB, Still 6 to go. Priority 0. Quantum 7. Elapesd ticks: total 75
+threadB, Still 5 to go. Priority 0. Quantum 6. Elapesd ticks: total 76
+threadB, Still 4 to go. Priority 0. Quantum 5. Elapesd ticks: total 77
+threadB, Still 3 to go. Priority 0. Quantum 4. Elapesd ticks: total 78
+threadB, Still 2 to go. Priority 0. Quantum 3. Elapesd ticks: total 79
+threadB, Still 1 to go. Priority 0. Quantum 2. Elapesd ticks: total 80
+threadB, Still 0 to go. Priority 0. Quantum 1. Elapesd ticks: total 81
+threadB, Done with burst. Elapesd ticks: total 81
+Switching from thread "threadB" to thread "threadD"
+threadD, Still 20 to go. Priority 0. Quantum 21. Elapesd ticks: total 81
+threadD, Still 19 to go. Priority 0. Quantum 20. Elapesd ticks: total 82
+threadD, Still 18 to go. Priority 0. Quantum 19. Elapesd ticks: total 83
+threadD, Still 17 to go. Priority 0. Quantum 18. Elapesd ticks: total 84
+threadD, Still 16 to go. Priority 0. Quantum 17. Elapesd ticks: total 85
+threadD, Still 15 to go. Priority 0. Quantum 16. Elapesd ticks: total 86
+threadD, Still 14 to go. Priority 0. Quantum 15. Elapesd ticks: total 87
+threadD, Still 13 to go. Priority 0. Quantum 14. Elapesd ticks: total 88
+threadD, Still 12 to go. Priority 0. Quantum 13. Elapesd ticks: total 89
+threadD, Still 11 to go. Priority 0. Quantum 12. Elapesd ticks: total 90
+threadD, Still 10 to go. Priority 0. Quantum 11. Elapesd ticks: total 91
+threadD, Still 9 to go. Priority 0. Quantum 10. Elapesd ticks: total 92
+threadD, Still 8 to go. Priority 0. Quantum 9. Elapesd ticks: total 93
+threadD, Still 7 to go. Priority 0. Quantum 8. Elapesd ticks: total 94
+threadD, Still 6 to go. Priority 0. Quantum 7. Elapesd ticks: total 95
+threadD, Still 5 to go. Priority 0. Quantum 6. Elapesd ticks: total 96
+threadD, Still 4 to go. Priority 0. Quantum 5. Elapesd ticks: total 97
+threadD, Still 3 to go. Priority 0. Quantum 4. Elapesd ticks: total 98
+threadD, Still 2 to go. Priority 0. Quantum 3. Elapesd ticks: total 99
+threadD, Still 1 to go. Priority 0. Quantum 2. Elapesd ticks: total 100
+threadD, Still 0 to go. Priority 0. Quantum 1. Elapesd ticks: total 101
+threadD, Done with burst. Elapesd ticks: total 101
+Switching from thread "threadD" to thread "threadE"
+threadE, Still 2 to go. Priority 0. Quantum 3. Elapesd ticks: total 101
+threadE, Still 1 to go. Priority 0. Quantum 2. Elapesd ticks: total 102
+threadE, Still 0 to go. Priority 0. Quantum 1. Elapesd ticks: total 103
+threadE, Done with burst. Elapesd ticks: total 103
+Switching from thread "threadE" to thread "threadF"
+threadF, Still 3 to go. Priority 0. Quantum 4. Elapesd ticks: total 103
+threadF, Still 2 to go. Priority 0. Quantum 3. Elapesd ticks: total 104
+threadF, Still 1 to go. Priority 0. Quantum 2. Elapesd ticks: total 105
+threadF, Still 0 to go. Priority 0. Quantum 1. Elapesd ticks: total 106
+threadF, Done with burst. Elapesd ticks: total 106
+Switching from thread "threadF" to thread "threadG"
+threadG, Still 6 to go. Priority 0. Quantum 7. Elapesd ticks: total 106
+threadG, Still 5 to go. Priority 0. Quantum 6. Elapesd ticks: total 107
+threadG, Still 4 to go. Priority 0. Quantum 5. Elapesd ticks: total 108
+threadG, Still 3 to go. Priority 0. Quantum 4. Elapesd ticks: total 109
+threadG, Still 2 to go. Priority 0. Quantum 3. Elapesd ticks: total 110
+threadG, Still 1 to go. Priority 0. Quantum 2. Elapesd ticks: total 111
+threadG, Still 0 to go. Priority 0. Quantum 1. Elapesd ticks: total 112
+threadG, Done with burst. Elapesd ticks: total 112
+No threads ready or runnable, and no pending interrupts.
+Assuming the program completed.
+Machine halting!
+
+Ticks: total 113, idle 1, system 112, user 0
+Disk I/O: reads 0, writes 0
+Console I/O: reads 0, writes 0
+Paging: faults 0
+Network I/O: packets received 0, sent 0
+
+Cleaning up...

@@ -1,0 +1,23 @@
+1. calculate performance
+
+| time                    | test0 | test1 | test2 | test3_1 | test3_2 |
+|-------------------------|-------|-------|-------|---------|---------|
+| average waiting time    | 93/5  | 121/5 | 82/5  |         |         |
+| average response time   | 163/5 | 51/5  | 87/5  |         |         |
+| average turnaround time | 163/5 | 191/5 | 152/5 |         |         |
+
+2. compare performance
+
+- FCFS algorithm yields less waiting time / turnaround time and longer response time **in this setting**
+- RR algorithm
+    - RR algorithm works better when lengths of processes vary a lot
+        - e.g. consider processes with lengths being {100t, 1t}, in this case, RR algorithm will get better waiting, turnaround and response time
+    - RR algorithm will make sure average response time is with in (n - 1)t, which will be better than FCFS given a small time quantum
+    - RR algorithm works worse when legnths of processes are nearly the same
+        - e.g. consider processes with lengths being {100t, ..., 100t}, in this setting, FCFS algorithm will get better waiting and turnaround time than RR with time quantum being t, but still get longer response time
+    - RR algorithm will increase the overhead of context switch
+- FCFS algorithm
+    - FCFS algorithm does not increase the overhead of context switch
+    - FCFS algorithm's performance depends on the order of processes, which may leads to the worst case
+        - e.g. consider processes with lengths being {1t, ..., 99t, 100t} and {100t, ..., 2t, 1t}, in the former case, FCFS is the best algorithm but the worst in the last case.
+- In conclusion, with regrad to waiting / turnaround time, it depends on the lengths / orders of processes, but for response time, RR can achieve less response time with a given small time quantum
