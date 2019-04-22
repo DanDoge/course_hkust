@@ -2,9 +2,9 @@
 
 | time                    | test0 | test1 | test2 | test3_1 | test3_2 |
 |-------------------------|-------|-------|-------|---------|---------|
-| average waiting time    | 93/5  | 121/5 | 82/5  |         |         |
-| average response time   | 163/5 | 51/5  | 87/5  |         |         |
-| average turnaround time | 163/5 | 191/5 | 152/5 |         |         |
+| average waiting time    | 93/5  | 121/5 | 82/5  | 86/5    | 382/8   |
+| average response time   | 163/5 | 51/5  | 87/5  | 21/5    | 54/8    |
+| average turnaround time | 163/5 | 191/5 | 152/5 | 156/5   | 494/8   |
 
 2. compare performance
 
@@ -21,3 +21,9 @@
     - FCFS algorithm's performance depends on the order of processes, which may leads to the worst case
         - e.g. consider processes with lengths being {1t, ..., 99t, 100t} and {100t, ..., 2t, 1t}, in the former case, FCFS is the best algorithm but the worst in the last case.
 - In conclusion, with regrad to waiting / turnaround time, it depends on the lengths / orders of processes, but for response time, RR can achieve less response time with a given small time quantum
+
+3. compare results
+
+- MLFQ bahaves worse in test3_2 than in test3_1 with regrad to all of three criterias, for MLFQ bahaves not so well when relatively long process keeps arriving.
+- In test3_2's setting, jobs arrive frequently, in which case, newly arrived process will keep preempting old processes and occupying CPU, while other processes has to wait for its turn.
+- Thus, waiting time and turnaround time increases, and newly arrived process also has to wait for its turn to run on CPU for the first time so response time also increases.

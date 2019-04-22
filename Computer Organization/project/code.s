@@ -1,3 +1,16 @@
+#Huang Daoji, Student ID: 20623420
+# to do list
+# -[x] 19/04 task 1, 2
+# -[x] 20/04 task 3, 4
+# -[x] 21/04 task 5, 6
+# -[ ] full comments
+# -[ ] optimize use of regsiters and control flow
+# -[ ] find bugs, which never ends
+#
+# bugs / features found
+# - shield wont disappear if ninja doesnot move... should be a feature
+
+
 .data
 
 shield_time:	.word 0 # the remaining time (number of ninja movement inputs) of the Shield mode
@@ -758,14 +771,31 @@ process_shield_mode:
 	sw $ra, 0($sp)
 #*****Your codes start here
 	# Set shiled_time to enter Shield Mode
-
+	lw $t0, shield_time_limit
+	la $t1, shield_time
+	sw $t0, 0($t1)
+	li $a0, 1
+	li $v0, 212
+	syscall
 
 	# Decrease game score by 10, and use syscall 203 to set the game score
-
+	la $t0, game_score
+	lw $t1, 0($t0)
+	addi $t1, $t1, -10
+	sw $t1, 0($t0)
+	add $a0, $zero, $t1
+	li $v0, 203
+	syscall
+	slt $t0, $zero, $t1 # $t0 = 1 iff score > 0
+	beq $t0, $zero, psm_exit
 
 	# Play the sound of losing game score using syscall 202
-
+	li $a0, 2
+	li $a1, 0
+	li $v0, 202
+	syscall
 	# Teleport the ninja to a new location
+	jal teleport_ninja
 
 #*****Your codes end here
 psm_exit: # Return to main flow
@@ -1483,20 +1513,20 @@ cmc_be:	beq $s0, $zero, cmc_no_collision # whether num <= 0
 	addi $sp, $sp, -32
 	sw $t0, 28($sp)
 	sw $t1, 24($sp)
-	add $s6, $s6, $t0
-	addi $s6, $s6, -1
-	sw $s6, 20($sp)
-	add $s7, $s7, $t1
-	addi $s7, $s7, -1
-	sw $s7, 16($sp)
+	add $t0, $s6, $t0
+	addi $t0, $t0, -1
+	sw $t0, 20($sp)
+	add $t1, $s7, $t1
+	addi $t1, $t1, -1
+	sw $t1, 16($sp)
 	sw $v0, 12($sp)
 	sw $v1, 8($sp)
-	add $s3, $s3, $v0
-	addi $s3, $s3, -1
-	sw $s3, 4($sp)
-	add $s4, $s4, $v1
-	addi $s4, $s4, -1
-	sw $s4, 0($sp)
+	add $v0, $s3, $v0
+	addi $v0, $v0, -1
+	sw $v0, 4($sp)
+	add $v1, $s4, $v1
+	addi $v1, $v1, -1
+	sw $v1, 0($sp)
 	jal check_intersection
 	addi $sp, $sp, 32
 
