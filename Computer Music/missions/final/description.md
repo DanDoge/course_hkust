@@ -1,0 +1,10 @@
+### Final Project
+
+###### Huang Daoji 20623420
+
+The source video is several [DLC trailers](<https://www.youtube.com/watch?v=r6UBC0Idn0E&list=PL4hR-M4rl7ufKgj2A0SfgQKdvBpldrK9X>) of the game *Hearts of Iron IV*, and the movie *Downfall*. I am inspired by [this video](<https://www.youtube.com/watch?v=HAtTJcRxvCI>), which tells the story of Hitler playing HOI4. Instead, my video shows how Hilter will react to a game trailer which tells Germany's failure in WW2. Strictly speaking, it is not a typical mashup "trailer", but a mashup of a movie and a game, in which the game part contains a mashup of trailers(and some scenes from the movie, too). Instead of making the music according to the theme like in previous assignments, this time I have to find suitable music for the video. 
+
+- The first part of the video is Hilter chatting with his generals with BGM being *バナナの叩き売り*(Eng: bargain sale bananas), which is a quite brisk one.  Heartbeat sound is added to represent the general's nervousness and the music stalls when the general is waiting for Hitler's reply and continues when Hilter gives a positive reply.
+- In the second part, which is the trailer part, I use *Axis theme* from the game HOI4, cut off unnecessary part, focus on the synchronization between music and the trailer: the deeper part for German expansion, the more triumphant part for Allies counterattack, and if possible, align the transitions to the music. Several sound effects(e.g. thunder, flipping paper, machine gun, etc) are added in this part, too. Some scenes from the movie are mashed into the trailer as long as they do not seem abrupt.
+- In the third part, repeated drum beat(from *始原のビート ～ Pristine Beat*) and building shepart-tone are used to represent Hitler's anger, and the music here is from *ブリッジの上で*(Eng: on the bridge), in which the sharp violin sound builds and builds until Hitler breaks out. 
+- The fourth part starts with raining sound and another part from *ブリッジの上で*, which helps to create a sad feeling. After the man is shot, the music stops, and the heartbeat gradually slows down.
